@@ -1,6 +1,6 @@
 ## Set Up
 
-First install the dependencies in the museum directory by:
+First install the dependencies in the museum directory by
 
 ### `npm install`
 
