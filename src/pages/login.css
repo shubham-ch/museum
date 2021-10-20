@@ -1,0 +1,28 @@
+@media all and (min-width: 480px) {
+    
+    .Login {
+      padding: 60px 0;
+    }
+  
+    .Login form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  }
+
+.container1{
+    text-align: center;
+    margin: auto;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    width: 4in;
+
+    }
+
+  .container2 {
+    /* text-align: center; */
+    margin: auto;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    /* width: 4in; */
+  }
