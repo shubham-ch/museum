@@ -14,7 +14,7 @@ const Login = () => {
     function validateForm() {
         console.log(email)
         console.log(password)
-        if (email === "a@1" && password === "1") {
+        if (email === "arnav@gmail.com" && password === "123") {
             localStorage.setItem("isAuthenticated", "true");
             history.push('dashboard')
         }

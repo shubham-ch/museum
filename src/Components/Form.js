@@ -1,16 +1,29 @@
-
-import { render } from '@testing-library/react';
 import React, { useState } from 'react'
 import { Form, Row, Col, InputGroup, FormControl, Button, Card, CardHeader, CardTitle, CardBody, ProgressBar, FloatingLabel } from 'react-bootstrap';
 import axios from 'axios'
 import '../App.css'
-// import { useHistory } from 'react-router';
+import { fetchWithToken } from '../Config/config';
+import { app_dict } from '../Config/config';
 
-// You need to add this token from the apiendpont in postman or swagger
-var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjM0NzU3Njg2LCJqdGkiOiIxMGQwMTkwMTY1NTY0ZTFmYWU3Yzg5N2E4Yzg3ZjNiNiIsInVzZXJfaWQiOjF9.JpbX5V2t03CsWcrsxUcgbVyqi6rUx6dAwxgQVh8ydAk";
+const headers = new Headers();
+
+fetchWithToken("http://127.0.01:8000/auth/token/",{
+    method: "POST",
+    timeout: 5000,
+    headers: headers,
+    body: JSON.stringify({
+        email: "arnav@gmail.com",
+        password: "123"
+    })
+})
+.then((data) => {
+    // console.log(app_dict.access)
+    app_dict.access = data?.access;
+    app_dict.refresh = data?.refresh;
+})
+
 
 function Form2() {
-
     const [serialnum, setserialnum] = useState("");
     const [title, setTitle] = useState("");
     const [fname, setFname] = useState("");
@@ -58,20 +71,32 @@ function Form2() {
         formField.append('additional_info', addinfo)
 
         // const history= useHistory()
-        console.log(formField)
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }
-        axios.post('http://127.0.0.1:8000/api/sites/', formField, config)
-        .then((res) => {
-            console.log(res.data);
+        // var token= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjM2MTMwMjcwLCJqdGkiOiI2YTQ3MjNkMWFhOWE0ZDYyYmYyMWRhY2M2MDVhZmVhZCIsInVzZXJfaWQiOjF9.czeUDWjOGp3WIDMpVslBf6L-9L-RXjxkjkjQ_jfdQ44"
+        // console.log(formField)
+
+        // const config = {
+        //     headers: { Authorization: `Bearer ${token}` }
+        // };
+
+        // axios.post('http://127.0.0.1:8000/api/sites/', {
+        //     config ,
+        //     data: formField
+        // }).then((res)=>{
+        //     console.log("Hello");
+        //     console.log(res.data);
+        // })
+
+        fetchWithToken('http://127.0.0.1:8000/api/sites/', {
+            method: "POST",
+            headers: new Headers(),
+            body: formField
         })
-        .catch((err) => {
-            console.log(err.response);
-        });
+        .then((res) => {
+            console.log("Hello");
+            console.log(res.data);
+        }).catch((err)=>{
+            console.log(err)
+        })
     }
 
     return (
@@ -155,7 +180,7 @@ function Form2() {
                                     value={tperiod}
                                     onChange={(e) => setTperiod(e.target.value)}>
                                     <Form.Select aria-label="Floating label select example">
-                                        <option value="1">Flakkaserne and before</option>
+                                        <option value="FL">Flakkaserne and before</option>
                                         <option value="2">Grohn Barracks I</option>
                                         <option value="3">DP Camp Grohn</option>
                                         <option value="4">Grohn Barracks II</option>
@@ -237,7 +262,6 @@ function Form2() {
                                     />
                                 </FloatingLabel>
                             </Col>
-
                         </Row>
                         <Row className="align-items-center" style={{ marginLeft: '2rem', marginTop: "2rem", marginRight: '2rem' }}>
                             <Col className="my-1">
@@ -316,7 +340,6 @@ function Form2() {
                             </Col>
                         </Row>
                         <Row className="align-items-center" style={{ marginLeft: '2rem', marginTop: "2rem", marginRight: '2rem' }}>
-
                             <Col>
                                 <Button variant="primary" type="submit" style={{ width: "40%" }} onClick={AddSite}>Submit Data</Button>
                             </Col>

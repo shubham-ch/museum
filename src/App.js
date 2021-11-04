@@ -8,8 +8,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './Components/PrivateRoute';
+import Search from './Components/Search'
 
 function App() {
+  
   return (
     <div className="App">
       <Router>
@@ -18,6 +20,7 @@ function App() {
         <Route exact path='/' exact component={Login} />
         <ProtectedRoute exact path='/addnewsite' exact component={Form} />
         <ProtectedRoute exact path='/dashboard' exact component={Dashboard} />
+        <ProtectedRoute exact path='/search' exact component={Search}/>
         </Switch>
       </Router>
     </div>
